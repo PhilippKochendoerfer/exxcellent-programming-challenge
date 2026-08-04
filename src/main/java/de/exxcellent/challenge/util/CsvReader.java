@@ -5,12 +5,14 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple CSV reader wrapper oround BufferedReader to read CSV files line by line and split them into String arrays.
  * @author Philipp Kochendörfer
  */
-public class CsvReader {
+public class CsvReader extends DataReader {
 
     BufferedReader reader;
     int lineNumber = 0;
@@ -23,6 +25,20 @@ public class CsvReader {
             System.getLogger(CsvReader.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
+    }
+
+    @Override
+    public Data readData() throws IOException {
+        if (lineNumber > 0) {
+            throw new IllegalStateException("Data can only be read once and must be the first line.");
+        }
+        String[] header = readHeader();
+        List<String[]> rows = new ArrayList<>();
+        String[] line;
+        while ((line = readLine()) != null) {
+            rows.add(line);
+        }
+        return new Data(header, rows);
     }
 
     public String[] readHeader() throws IOException {

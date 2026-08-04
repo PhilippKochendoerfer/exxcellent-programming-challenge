@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import de.exxcellent.challenge.util.CsvReader;
+import de.exxcellent.challenge.util.Data;
 
 public class Weather {
 
@@ -18,17 +19,20 @@ public class Weather {
         int smallestSpread = Integer.MAX_VALUE;
         int dayWithSmallestSpread = -1;
 
+
         try {
             CsvReader reader = new CsvReader(FILE_PATH, ",");
-            reader.readHeader();
-            String[] line;
-            while ((line = reader.readLine()) != null) {
-                int[] temperatureData = getTemperatureSpread(line);
-                if (temperatureData[1] < smallestSpread) {
-                    smallestSpread = temperatureData[1];
-                    dayWithSmallestSpread = temperatureData[0];
-                }
+            Data data = reader.readData();
+            
+            for (String[] line : data.getRows()) {
+                int[] spreadData = getTemperatureSpread(line);
+                int day = spreadData[0];
+                int spread = spreadData[1];
 
+                if (spread < smallestSpread) {
+                    smallestSpread = spread;
+                    dayWithSmallestSpread = day;
+                }
             }
 
         } catch (FileNotFoundException ex) {
