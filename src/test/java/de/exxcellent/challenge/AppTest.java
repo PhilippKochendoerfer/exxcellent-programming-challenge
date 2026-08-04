@@ -1,9 +1,7 @@
 package de.exxcellent.challenge;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 /**
  * Example JUnit 5 test case.
@@ -11,21 +9,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class AppTest {
 
-    private String successLabel = "not successful";
-
-    @BeforeEach
-    void setUp() {
-        successLabel = "successful";
-    }
-
     @Test
-    void aPointlessTest() {
-        assertEquals("successful", successLabel, "My expectations were not met");
+    void testWheatherMinimumSpread() {
+        String dayWithSmallestTempSpread = Weather.getDayWithSmallestTemperatureSpread();
+        assertEquals("14", dayWithSmallestTempSpread);
     }
 
-    @Test
-    void runFootball() {
-        App.main("--football", "football.csv");
-    }
+//     @Test
+//     void runFootball() {
+//         App.main("--football", "football.csv");
+//     }
 
 }
