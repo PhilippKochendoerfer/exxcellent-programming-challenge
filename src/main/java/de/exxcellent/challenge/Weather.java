@@ -1,9 +1,9 @@
 package de.exxcellent.challenge;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+
+import de.exxcellent.challenge.util.CsvReader;
 
 public class Weather {
 
@@ -17,14 +17,13 @@ public class Weather {
         int dayWithSmallestSpread = -1;
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH));
-            reader.readLine(); // Skip the header line
-            String line;
+            CsvReader reader = new CsvReader(FILE_PATH, ",");
+            reader.readHeader(); // Read the header line
+            String[] line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.trim().split(",");
-                int day = Integer.parseInt(parts[0]);
-                int maxTemp = Integer.parseInt(parts[1]);
-                int minTemp = Integer.parseInt(parts[2]);
+                int day = Integer.parseInt(line[0]);
+                int maxTemp = Integer.parseInt(line[1]);
+                int minTemp = Integer.parseInt(line[2]);
                 int spread = maxTemp - minTemp;
 
                 if (spread < smallestSpread) {
