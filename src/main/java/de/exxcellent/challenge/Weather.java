@@ -10,7 +10,9 @@ public class Weather {
     private static final String FILE_PATH = "src/main/resources/de/exxcellent/challenge/weather.csv";
 
     /**
-     * This method reads the weather data from a CSV file and finds the day with the smallest temperature spread (difference between maximum and minimum temperature).
+     * This method reads the weather data from a CSV file and finds the day with
+     * the smallest temperature spread (difference between maximum and minimum
+     * temperature).
      */
     public static String getDayWithSmallestTemperatureSpread() {
         int smallestSpread = Integer.MAX_VALUE;
@@ -18,17 +20,13 @@ public class Weather {
 
         try {
             CsvReader reader = new CsvReader(FILE_PATH, ",");
-            reader.readHeader(); // Read the header line
+            reader.readHeader();
             String[] line;
             while ((line = reader.readLine()) != null) {
-                int day = Integer.parseInt(line[0]);
-                int maxTemp = Integer.parseInt(line[1]);
-                int minTemp = Integer.parseInt(line[2]);
-                int spread = maxTemp - minTemp;
-
-                if (spread < smallestSpread) {
-                    smallestSpread = spread;
-                    dayWithSmallestSpread = day;
+                int[] temperatureData = getTemperatureSpread(line);
+                if (temperatureData[1] < smallestSpread) {
+                    smallestSpread = temperatureData[1];
+                    dayWithSmallestSpread = temperatureData[0];
                 }
 
             }
@@ -41,5 +39,12 @@ public class Weather {
 
         return dayWithSmallestSpread + "";
     }
-   
+
+    private static int[] getTemperatureSpread(String[] line) {
+        int day = Integer.parseInt(line[0]);
+        int maxTemp = Integer.parseInt(line[1]);
+        int minTemp = Integer.parseInt(line[2]);
+        int spread = maxTemp - minTemp;
+        return new int[]{day, spread};
+    }
 }
