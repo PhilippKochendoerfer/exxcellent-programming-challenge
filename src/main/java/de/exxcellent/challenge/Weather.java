@@ -16,24 +16,11 @@ public class Weather {
      * temperature).
      */
     public static String getDayWithSmallestTemperatureSpread() {
-        int smallestSpread = Integer.MAX_VALUE;
         int dayWithSmallestSpread = -1;
-
-
         try {
             CsvReader reader = new CsvReader(FILE_PATH, ",");
             Data data = reader.readData();
-            
-            for (String[] line : data.getRows()) {
-                int[] spreadData = getTemperatureSpread(line);
-                int day = spreadData[0];
-                int spread = spreadData[1];
-
-                if (spread < smallestSpread) {
-                    smallestSpread = spread;
-                    dayWithSmallestSpread = day;
-                }
-            }
+            dayWithSmallestSpread = getDayWithSmallestTemperatureSpread(data);
 
         } catch (FileNotFoundException ex) {
             System.getLogger(Weather.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -42,6 +29,24 @@ public class Weather {
         }
 
         return dayWithSmallestSpread + "";
+    }
+
+    private static int getDayWithSmallestTemperatureSpread(Data data) {
+        int smallestSpread = Integer.MAX_VALUE;
+        int dayWithSmallestSpread = -1;
+
+        for (String[] line : data.getRows()) {
+            int[] spreadData = getTemperatureSpread(line);
+            int day = spreadData[0];
+            int spread = spreadData[1];
+
+            if (spread < smallestSpread) {
+                smallestSpread = spread;
+                dayWithSmallestSpread = day;
+            }
+        }
+
+        return dayWithSmallestSpread;
     }
 
     private static int[] getTemperatureSpread(String[] line) {
