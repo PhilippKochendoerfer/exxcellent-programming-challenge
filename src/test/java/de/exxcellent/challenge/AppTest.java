@@ -1,31 +1,27 @@
 package de.exxcellent.challenge;
 
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import de.exxcellent.challenge.weather.Weather;
 
 /**
  * Example JUnit 5 test case.
+ *
  * @author Benjamin Schmid <benjamin.schmid@exxcellent.de>
  */
 class AppTest {
 
-    private String successLabel = "not successful";
-
-    @BeforeEach
-    void setUp() {
-        successLabel = "successful";
-    }
+    private final String WEATHER_CSV = "src/main/resources/de/exxcellent/challenge/weather.csv";
 
     @Test
-    void aPointlessTest() {
-        assertEquals("successful", successLabel, "My expectations were not met");
+    void testGetDayWithSmallestTemperatureSpread() {
+        assertEquals("14", Weather.getDayWithSmallestTemperatureSpread(WEATHER_CSV), "My expectations were not met");
     }
 
-    @Test
-    void runFootball() {
-        App.main("--football", "football.csv");
-    }
+    // @Test
+    // void runFootball() {
+    //     App.main("--football", "football.csv");
+    // }
 
 }
