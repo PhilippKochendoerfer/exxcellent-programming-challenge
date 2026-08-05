@@ -3,6 +3,7 @@ package de.exxcellent.challenge;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+import de.exxcellent.challenge.football.Football;
 import de.exxcellent.challenge.weather.Weather;
 
 /**
@@ -13,12 +14,17 @@ import de.exxcellent.challenge.weather.Weather;
 class AppTest {
 
     private final String WEATHER_CSV = "src/main/resources/de/exxcellent/challenge/weather.csv";
+    private final String FOOTBALL_CSV = "src/main/resources/de/exxcellent/challenge/football.csv";
 
     @Test
     void testGetDayWithSmallestTemperatureSpread() {
         assertEquals("14", Weather.getDayWithSmallestTemperatureSpread(WEATHER_CSV), "My expectations were not met");
     }
 
+    @Test
+    void testGetTeamWithSmallestGoalDifference() {
+        assertEquals("Aston_Villa", Football.getTeamWithSmallestDiff(FOOTBALL_CSV), "My expectations were not met");
+    }
     // @Test
     // void runFootball() {
     //     App.main("--football", "football.csv");

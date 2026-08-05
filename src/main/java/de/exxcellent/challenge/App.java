@@ -1,5 +1,6 @@
 package de.exxcellent.challenge;
 
+import de.exxcellent.challenge.football.Football;
 import de.exxcellent.challenge.weather.Weather;
 
 /**
@@ -25,8 +26,13 @@ public final class App {
             System.err.println("Error reading weather data: " + e.getMessage());
             System.exit(1);
         }
-        
-        // String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
-        // System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+
+        try {
+            String teamWithSmallestGoalSpread = Football.getTeamWithSmallestDiff("src/main/resources/de/exxcellent/challenge/football.csv");
+            System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+        } catch (RuntimeException e) {
+            System.err.println("Error reading football data: " + e.getMessage());
+            System.exit(1);
+        }
     }
 }
