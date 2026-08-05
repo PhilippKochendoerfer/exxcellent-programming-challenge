@@ -37,8 +37,4 @@ class DataTest {
         }, "Expected an IllegalArgumentException to be thrown due to malformed data");
     }
 
-    // @Test
-    // void runFootball() {
-    //     App.main("--football", "football.csv");
-    // }
 }

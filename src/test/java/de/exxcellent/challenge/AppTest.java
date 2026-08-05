@@ -25,9 +25,9 @@ class AppTest {
     void testGetTeamWithSmallestGoalDifference() {
         assertEquals("Aston_Villa", Football.getTeamWithSmallestDiff(FOOTBALL_CSV), "My expectations were not met");
     }
-    // @Test
-    // void runFootball() {
-    //     App.main("--football", "football.csv");
-    // }
+    @Test
+    void runApp() {
+        App.main();
+    }
 
 }
