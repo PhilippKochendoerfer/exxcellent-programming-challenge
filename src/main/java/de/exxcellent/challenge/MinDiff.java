@@ -20,11 +20,8 @@ public class MinDiff {
 
     private static Data getDataFromFile(String filePath) {
         DataFileReader csvReader = new CsvReader(filePath);
-        try {
-            return csvReader.readData();
-        } catch (IOException e) {
-            throw new RuntimeException("Error reading data from file: " + e.getMessage());
-        }
+        return csvReader.readData();
+
     }
 
     private static String getKeyWithSmallestDiff(Data data, int keyIndex, int minuendIndex, int subtrahendIndex, boolean absolute) {

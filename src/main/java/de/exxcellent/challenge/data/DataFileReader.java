@@ -13,5 +13,5 @@ public abstract class DataFileReader {
         this.filePath = filePath;
     }
 
-    public abstract Data readData() throws java.io.IOException;
+    public abstract Data readData();
 }
