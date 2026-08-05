@@ -141,7 +141,16 @@ Build & test your project::
     `mvn verify`
 
 Then to run the main class _de.exxcellent.challenge.App_::
-    `mvn exec:java`
+    `mvn exec:java` +
+    or `java -cp target/classes de.exxcellent.challenge.App` +
+    Without CLI arguments, both challenges run against their default CSV files.
+
+To run only one challenge, pass CLI arguments (the challenge and the path to its CSV file)::
+    `mvn exec:java "-Dexec.args=--weather src/main/resources/de/exxcellent/challenge/weather.csv"` +
+    `mvn exec:java "-Dexec.args=--football src/main/resources/de/exxcellent/challenge/football.csv"` +
+    Alternatively, run the compiled class directly, which avoids
+    quoting issues with `exec.args`: +
+    `java -cp target/classes de.exxcellent.challenge.App --weather src/main/resources/de/exxcellent/challenge/weather.csv`
 
 To remove the compilation output::
     `mvn clean`
