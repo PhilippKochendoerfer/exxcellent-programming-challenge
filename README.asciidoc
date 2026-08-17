@@ -141,7 +141,12 @@ Build & test your project::
     `mvn verify`
 
 Then to run the main class _de.exxcellent.challenge.App_::
-    `mvn exec:java`
+    `mvn compile exec:java "-Dexec.args=--weather path/to/weather.csv"` +
+    `mvn compile exec:java "-Dexec.args=--football path/to/football.csv"`
+
+Or without the exec plugin::
+    `mvn compile` +
+    `java -cp target/classes de.exxcellent.challenge.App --weather path/to/weather.csv`
 
 To remove the compilation output::
     `mvn clean`

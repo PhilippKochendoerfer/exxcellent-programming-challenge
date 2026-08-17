@@ -19,29 +19,43 @@ public final class App {
      * This is the main entry method of your program.
      *
      * @param args The CLI arguments passed
-     * @throws NoDataFoundException 
+     * @throws NoDataFoundException
      */
-    public static void main(String... args){
+    public static void main(String... args) {
 
+        if (args.length != 2) {
+            System.err.println("Usage: <--weather|--football> <file>");
+            return;
+        }
+
+        String appParam = args[0];
+        String fileParam = args[1];
         try {
-            String dayWithSmallestTempSpread = Weather
-                    .getDayWithSmallestTemperatureSpread("src/main/resources/de/exxcellent/challenge/weather.csv");
-            System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+            switch (appParam) {
+                case "--weather":
+                    String dayWithSmallestTempSpread = Weather
+                            .getDayWithSmallestTemperatureSpread(
+                                    fileParam);
+                    System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+
+                    break;
+
+                case "--football":
+                    String teamWithSmallestGoalSpread = Football
+                            .getTeamWithSmallestDiff(fileParam);
+                    System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+                    break;
+
+                default:
+                    System.err.println("Unknown option: " + appParam);
+                    break;
+            }
+
         } catch (IOException e) {
-            System.err.println("I/O error while reading weather file: " + e.getMessage());
+            System.err.println("I/O error while reading file: " + e.getMessage());
         } catch (NoDataFoundException e) {
             System.err.println("Could not calculate smallest temperature spread. " + e.getMessage());
         }
 
-        try {
-            String teamWithSmallestGoalSpread = Football
-                    .getTeamWithSmallestDiff("src/main/resources/de/exxcellent/challenge/football.csv");
-            System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
-        } catch (IOException e) {
-            System.err.println("Error reading football file: " + e.getMessage());
-            System.exit(1);
-        } catch (NoDataFoundException e) {
-            System.err.println("Could not calculate smallest goal spread. " + e.getMessage());
-        }
     }
 }
