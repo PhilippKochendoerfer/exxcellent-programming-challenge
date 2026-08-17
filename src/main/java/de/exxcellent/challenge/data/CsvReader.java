@@ -1,6 +1,7 @@
 package de.exxcellent.challenge.data;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
@@ -18,14 +19,13 @@ public class CsvReader extends DataFileReader {
     }
 
     @Override
-    public Data readData() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(this.filePath))) {
-            String[] header = reader.readLine().split(",");
-            List<String[]> rows = reader.lines().map(line -> line.split(","))
-                    .collect(Collectors.toList());
-            return new Data(header, rows);
-        } catch (IOException e) {
-            throw new RuntimeException("Error reading data from file: " + e.getMessage());
-        }
+    public Data readData() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
+        String[] header = reader.readLine().split(",");
+        List<String[]> rows = reader.lines().map(line -> line.split(","))
+                .collect(Collectors.toList());
+        reader.close();
+        return new Data(header, rows);
+
     }
 }

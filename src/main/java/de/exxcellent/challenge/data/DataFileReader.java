@@ -1,5 +1,7 @@
 package de.exxcellent.challenge.data;
 
+import java.io.IOException;
+
 /**
  * Class to read data from a file and create table-like data structure.
  *
@@ -13,5 +15,5 @@ public abstract class DataFileReader {
         this.filePath = filePath;
     }
 
-    public abstract Data readData();
+    public abstract Data readData() throws IOException;
 }

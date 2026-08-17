@@ -1,14 +1,13 @@
 package de.exxcellent.challenge.football;
 
+import java.io.IOException;
+
 import de.exxcellent.challenge.MinDiff;
+import de.exxcellent.challenge.exception.NoDataFoundException;
 
 public class Football {
 
-    public static String getTeamWithSmallestDiff(String filePath) {
-        String team = MinDiff.getKeyWithSmallestDiff(filePath, 0, 5, 6, true);
-        if (team == null) {
-            throw new RuntimeException("No team found with valid goal difference data");
-        }
-        return team;
+    public static String getTeamWithSmallestDiff(String filePath) throws IOException, NoDataFoundException {
+        return MinDiff.getKeyWithSmallestDiff(filePath, 0, 5, 6, true);
     }
 }

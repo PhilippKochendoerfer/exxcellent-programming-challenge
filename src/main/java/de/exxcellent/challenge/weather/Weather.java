@@ -2,15 +2,13 @@ package de.exxcellent.challenge.weather;
 
 import java.io.IOException;
 import de.exxcellent.challenge.MinDiff;
+import de.exxcellent.challenge.exception.NoDataFoundException;
 
 
 public class Weather {
 
-    public static String getDayWithSmallestTemperatureSpread(String filePath) {
+    public static String getDayWithSmallestTemperatureSpread(String filePath) throws IOException, NoDataFoundException {
         String day = MinDiff.getKeyWithSmallestDiff(filePath, 0, 1, 2);
-        if (day == null) {
-            throw new RuntimeException("No day found with valid temperature data");
-        }
         return day;
     }
 }
