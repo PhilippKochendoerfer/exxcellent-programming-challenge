@@ -25,36 +25,19 @@ public final class App {
 
         if (args.length != 2) {
             System.err.println("Usage: <--weather|--football> <file>");
-            return;
+            System.exit(1);
         }
 
         String appParam = args[0];
         String fileParam = args[1];
         try {
-            switch (appParam) {
-                case "--weather":
-                    String dayWithSmallestTempSpread = Weather
-                            .getDayWithSmallestTemperatureSpread(
-                                    fileParam);
-                    System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
-
-                    break;
-
-                case "--football":
-                    String teamWithSmallestGoalSpread = Football
-                            .getTeamWithSmallestDiff(fileParam);
-                    System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
-                    break;
-
-                default:
-                    System.err.println("Unknown option: " + appParam);
-                    break;
-            }
-
+            Challenge.challenge(appParam, fileParam);
         } catch (IOException e) {
             System.err.println("I/O error while reading file: " + e.getMessage());
+            System.exit(1);
         } catch (NoDataFoundException e) {
-            System.err.println("Could not calculate smallest temperature spread. " + e.getMessage());
+            System.err.println("Could not calculate result. " + e.getMessage());
+            System.exit(1);
         }
 
     }

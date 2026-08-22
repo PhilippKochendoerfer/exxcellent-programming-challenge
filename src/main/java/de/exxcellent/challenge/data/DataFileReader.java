@@ -1,5 +1,7 @@
 package de.exxcellent.challenge.data;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -7,13 +9,13 @@ import java.io.IOException;
  *
  * @author Philipp Kochendörfer <philipp.kochendoerfer@uni-ulm.de>
  */
-public abstract class DataFileReader {
+public abstract class DataFileReader extends DataReader {
 
-    protected String filePath;
-
-    public DataFileReader(String filePath) {
-        this.filePath = filePath;
+    public DataFileReader(String filePath) throws FileNotFoundException {
+        super(new FileInputStream(filePath));
     }
 
+    @Override
     public abstract Data readData() throws IOException;
+
 }

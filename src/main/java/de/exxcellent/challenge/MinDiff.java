@@ -3,38 +3,23 @@ package de.exxcellent.challenge;
 import java.io.IOException;
 import java.util.List;
 
-import de.exxcellent.challenge.data.CsvReader;
 import de.exxcellent.challenge.data.Data;
-import de.exxcellent.challenge.data.DataFileReader;
 import de.exxcellent.challenge.exception.NoDataFoundException;
 
 public class MinDiff {
 
-    public static String getKeyWithSmallestDiff(String filePath, int keyIndex, int minuendIndex, int subtrahendIndex)
+    public static String getKeyWithSmallestDiff(Data data, int keyIndex, int minuendIndex, int subtrahendIndex)
             throws IOException, NoDataFoundException {
-        return MinDiff.getKeyWithSmallestDiff(filePath, keyIndex, minuendIndex, subtrahendIndex, false);
+        return MinDiff.getKeyWithSmallestDiff(data, keyIndex, minuendIndex, subtrahendIndex, false);
     }
 
-    public static String getKeyWithSmallestDiff(String filePath, int keyIndex, int minuendIndex, int subtrahendIndex,
-            boolean absolute) throws IOException, NoDataFoundException {
-        Data weatherData = getDataFromFile(filePath);
-        return getKeyWithSmallestDiff(weatherData, keyIndex, minuendIndex, subtrahendIndex, absolute);
-
-    }
-
-    private static Data getDataFromFile(String filePath) throws IOException {
-        DataFileReader csvReader = new CsvReader(filePath);
-        return csvReader.readData();
-
-    }
-
-    private static String getKeyWithSmallestDiff(Data data, int keyIndex, int minuendIndex, int subtrahendIndex,
+    public static String getKeyWithSmallestDiff(Data data, int keyIndex, int minuendIndex, int subtrahendIndex,
             boolean absolute) throws NoDataFoundException {
         String keyWithSmallestSpread = null;
         int smallestSpread = Integer.MAX_VALUE;
         int requiredColumns = Math.max(keyIndex, Math.max(minuendIndex, subtrahendIndex)) + 1;
         List<String[]> rows = data.getRows();
-        if (rows.size()<1) {
+        if (rows.size() < 1) {
             throw new NoDataFoundException("No Data Found!");
         }
         for (String[] row : rows) {
