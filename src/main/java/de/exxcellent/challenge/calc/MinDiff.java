@@ -1,18 +1,24 @@
-package de.exxcellent.challenge;
+package de.exxcellent.challenge.calc;
 
-import java.io.IOException;
 import java.util.List;
 
 import de.exxcellent.challenge.data.Data;
 import de.exxcellent.challenge.exception.NoDataFoundException;
 
 public class MinDiff {
-
-    public static String getKeyWithSmallestDiff(Data data, int keyIndex, int minuendIndex, int subtrahendIndex)
-            throws IOException, NoDataFoundException {
-        return MinDiff.getKeyWithSmallestDiff(data, keyIndex, minuendIndex, subtrahendIndex, false);
-    }
-
+    /**
+     * Returns the key with the smallest difference between the values at the
+     * specified minuend and subtrahend indices.
+     *
+     * @param data            The data to analyze.
+     * @param keyIndex        Index of the key in the row.
+     * @param minuendIndex    Index of the minuend value in the row.
+     * @param subtrahendIndex Index of the subtrahend value in the row.
+     * @param absolute        Flag indicating whether to consider the absolute
+     *                        difference or not.
+     * @return The key with the smallest difference.
+     * @throws NoDataFoundException
+     */
     public static String getKeyWithSmallestDiff(Data data, int keyIndex, int minuendIndex, int subtrahendIndex,
             boolean absolute) throws NoDataFoundException {
         String keyWithSmallestSpread = null;

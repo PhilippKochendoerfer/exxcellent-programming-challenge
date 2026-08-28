@@ -1,4 +1,4 @@
-package de.exxcellent.challenge;
+package de.exxcellent.challenge.data;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,12 +9,10 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
-import de.exxcellent.challenge.data.Data;
 
 /**
- * Example JUnit 5 test case.
- *
- * @author Philipp Kochendörfer <philipp.kochendoerfer@uni-ulm.de>
+ * Test class for the Data class.
+ * @author Philipp Kochendörfer <philipp.kochendoerfer@outlook.com>
  */
 class DataTest {
 
