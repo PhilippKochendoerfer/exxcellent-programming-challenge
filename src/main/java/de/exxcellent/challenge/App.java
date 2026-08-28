@@ -15,22 +15,27 @@ import de.exxcellent.challenge.weather.Weather;
  */
 public final class App {
 
+    private static final String DEFAULT_WEATHER_FILE = "src/main/resources/de/exxcellent/challenge/weather.csv";
+    private static final String DEFAULT_FOOTBALL_FILE = "src/main/resources/de/exxcellent/challenge/football.csv";
+
     /**
-     * This is the main entry method of your program.
+     * This is the main entry method of your program. Called without arguments,
+     * it runs both the weather and football analysis on the bundled sample data.
      *
-     * @param args The CLI arguments passed
+     * @param args The CLI arguments passed: none, or exactly {@code <--weather|--football> <file>}.
      */
     public static void main(String... args) {
 
-        if (args.length != 2) {
-            System.err.println("Usage: <--weather|--football> <file>");
-            System.exit(1);
-        }
-
-        String appParam = args[0];
-        String fileParam = args[1];
         try {
-            Challenge.challenge(appParam, fileParam);
+            if (args.length == 0) {
+                System.out.println(Challenge.challenge("--weather", DEFAULT_WEATHER_FILE));
+                System.out.println(Challenge.challenge("--football", DEFAULT_FOOTBALL_FILE));
+            } else if (args.length == 2) {
+                System.out.println(Challenge.challenge(args[0], args[1]));
+            } else {
+                System.err.println("Usage: <--weather|--football> <file>");
+                System.exit(1);
+            }
         } catch (IOException e) {
             System.err.println("I/O error while reading file: " + e.getMessage());
             System.exit(1);
@@ -38,6 +43,5 @@ public final class App {
             System.err.println("Could not calculate result. " + e.getMessage());
             System.exit(1);
         }
-
     }
 }
