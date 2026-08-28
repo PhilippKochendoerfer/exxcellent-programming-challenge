@@ -5,6 +5,10 @@ import java.util.List;
 import de.exxcellent.challenge.data.Data;
 import de.exxcellent.challenge.exception.NoDataFoundException;
 
+/**
+ * Generic helper for finding the row with the smallest difference between two
+ * columns in a {@link Data} table.
+ */
 public class MinDiff {
     /**
      * Returns the key with the smallest difference between the values at the
@@ -17,7 +21,7 @@ public class MinDiff {
      * @param absolute        Flag indicating whether to consider the absolute
      *                        difference or not.
      * @return The key with the smallest difference.
-     * @throws NoDataFoundException
+     * @throws NoDataFoundException if the data contains no row usable for the computation
      */
     public static String getKeyWithSmallestDiff(Data data, int keyIndex, int minuendIndex, int subtrahendIndex,
             boolean absolute) throws NoDataFoundException {

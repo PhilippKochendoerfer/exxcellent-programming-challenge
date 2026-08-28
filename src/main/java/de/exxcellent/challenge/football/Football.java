@@ -4,6 +4,9 @@ import de.exxcellent.challenge.calc.MinDiff;
 import de.exxcellent.challenge.data.Data;
 import de.exxcellent.challenge.exception.NoDataFoundException;
 
+/**
+ * Provides football-specific analysis over {@link Data} read from a CSV file.
+ */
 public class Football {
 
     /**
@@ -12,8 +15,7 @@ public class Football {
      *
      * @param data The data to analyze.
      * @return The team with the smallest difference.
-     * @throws IOException
-     * @throws NoDataFoundException
+     * @throws NoDataFoundException if the data contains no row usable for the computation
     */
 
     public static String getTeamWithSmallestDiff(Data data) throws NoDataFoundException {

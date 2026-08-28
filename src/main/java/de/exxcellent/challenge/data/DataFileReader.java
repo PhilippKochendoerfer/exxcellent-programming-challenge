@@ -7,10 +7,16 @@ import java.io.IOException;
 /**
  * Class to read data from a file and create table-like data structure.
  *
- * @author Philipp Kochendörfer <philipp.kochendoerfer@uni-ulm.de>
+ * @author Philipp Kochendörfer <philipp.kochendoerfer@outlook.com>
  */
 public abstract class DataFileReader extends DataReader {
 
+    /**
+     * Opens the file at the given path for reading.
+     *
+     * @param filePath path to the file to read.
+     * @throws FileNotFoundException if no file exists at the given path.
+     */
     public DataFileReader(String filePath) throws FileNotFoundException {
         super(new FileInputStream(filePath));
     }
