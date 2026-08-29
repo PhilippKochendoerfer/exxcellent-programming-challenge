@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
  */
 class DataTest {
 
-    private final String WEATHER_CSV_NOT_WELL_FORMED = "src/test/resources/de/excellent/challenge/weather_not_well_formed.csv";
+    private final String WEATHER_CSV_NOT_WELL_FORMED = "src/test/resources/de/exxcellent/challenge/weather_not_well_formed.csv";
 
     @Test
     void testWellFormedData() {
