@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -23,21 +23,21 @@ class DataReaderFactoryTest {
 
     @Test
     void create_csv_returnsCsvReader() throws IOException {
-        try (DataReader dataReader = DataReaderFactory.create("--csv", TINY_VALID_CSV)) {
+        try (DataReader dataReader = DataReaderFactory.create("--csv", new FileInputStream(TINY_VALID_CSV))) {
             assertInstanceOf(CsvReader.class, dataReader);
         }
     }
 
     @Test
     void create_json_returnsJsonReader() throws IOException {
-        try (DataReader dataReader = DataReaderFactory.create("--json", TINY_VALID_JSON)) {
+        try (DataReader dataReader = DataReaderFactory.create("--json", new FileInputStream(TINY_VALID_JSON))) {
             assertInstanceOf(JsonReader.class, dataReader);
         }
     }
 
     @Test
     void create_csv_readsSameDataAsCsvReader() throws IOException, InvalidDataException {
-        try (DataReader dataReader = DataReaderFactory.create("--csv", TINY_VALID_CSV)) {
+        try (DataReader dataReader = DataReaderFactory.create("--csv", new FileInputStream(TINY_VALID_CSV))) {
             Data data = dataReader.readData();
 
             assertEquals(2, data.getRows().size());
@@ -46,12 +46,9 @@ class DataReaderFactoryTest {
     }
 
     @Test
-    void create_unknownFormat_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> DataReaderFactory.create("--xml", TINY_VALID_CSV));
-    }
-
-    @Test
-    void create_missingFile_throwsFileNotFoundException() {
-        assertThrows(FileNotFoundException.class, () -> DataReaderFactory.create("--csv", "does/not/exist.csv"));
+    void create_unknownFormat_throwsIllegalArgumentException() throws IOException {
+        try (FileInputStream inputStream = new FileInputStream(TINY_VALID_CSV)) {
+            assertThrows(IllegalArgumentException.class, () -> DataReaderFactory.create("--xml", inputStream));
+        }
     }
 }

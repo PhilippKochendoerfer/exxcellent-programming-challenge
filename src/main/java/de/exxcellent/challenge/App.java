@@ -21,18 +21,18 @@ public final class App {
      * it runs both the weather and football analysis on the bundled sample data.
      *
      * @param args The CLI arguments passed: none, or exactly
-     *             {@code <--weather|--football> <--csv|--json> <file>}.
+     *             {@code <--weather|--football> <--csv|--json> <--file|--url> <location>}.
      */
     public static void main(String... args) {
 
         try {
             if (args.length == 0) {
-                System.out.println(Challenge.challenge("--weather", "--csv", DEFAULT_WEATHER_FILE));
-                System.out.println(Challenge.challenge("--football", "--csv", DEFAULT_FOOTBALL_FILE));
-            } else if (args.length == 3) {
-                System.out.println(Challenge.challenge(args[0], args[1], args[2]));
+                System.out.println(Challenge.challenge("--weather", "--csv", "--file", DEFAULT_WEATHER_FILE));
+                System.out.println(Challenge.challenge("--football", "--csv", "--file", DEFAULT_FOOTBALL_FILE));
+            } else if (args.length == 4) {
+                System.out.println(Challenge.challenge(args[0], args[1], args[2], args[3]));
             } else {
-                System.err.println("Usage: <--weather|--football> <--csv|--json> <file>");
+                System.err.println("Usage: <--weather|--football> <--csv|--json> <--file|--url> <location>");
                 System.exit(1);
             }
         } catch (IOException e) {
