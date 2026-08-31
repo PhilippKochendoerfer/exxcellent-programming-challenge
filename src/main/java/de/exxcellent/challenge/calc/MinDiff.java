@@ -12,12 +12,12 @@ public class MinDiff {
      * Returns the key with the smallest difference between the values in the
      * specified minuend and subtrahend columns.
      *
-     * @param data            The data to analyze.
-     * @param keyColumn       Name of the column identifying each row.
-     * @param minuendColumn   Name of the minuend column.
+     * @param data             The data to analyze.
+     * @param keyColumn        Name of the column identifying each row.
+     * @param minuendColumn    Name of the minuend column.
      * @param subtrahendColumn Name of the subtrahend column.
-     * @param absolute        Flag indicating whether to consider the absolute
-     *                        difference or not.
+     * @param absolute         Flag indicating whether to consider the absolute
+     *                         difference or not.
      * @return The key with the smallest difference.
      * @throws InvalidDataException if the data contains no rows, any of the given
      *                              column names does not exist in the header, or a

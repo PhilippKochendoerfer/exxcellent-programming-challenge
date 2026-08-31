@@ -35,7 +35,7 @@ public class JsonReader extends DataReader {
     }
 
     /**
-     * Reads data from the JSON file and creates a Data object.
+     * Reads data from the JSON input stream and creates a Data object.
      *
      * @return The Data object containing the header and rows from the JSON data.
      * @throws IOException          if the input stream cannot be read.
