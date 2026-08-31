@@ -1,12 +1,13 @@
 package de.exxcellent.challenge.data;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import de.exxcellent.challenge.exception.InvalidDataException;
@@ -18,23 +19,80 @@ import de.exxcellent.challenge.exception.InvalidDataException;
  */
 class DataTest {
 
-    private final String WEATHER_CSV_NOT_WELL_FORMED = "src/test/resources/de/exxcellent/challenge/weather_not_well_formed.csv";
+    @Test
+    void constructorThrowsInvalidDataException_whenRowLengthMismatchesHeader() {
+        String[] header = { "A", "B" };
+        List<String[]> rows = List.<String[]>of(new String[] { "1" });
+
+        assertThrows(InvalidDataException.class, () -> new Data(header, rows),
+                "Expected an InvalidDataException to be thrown due to malformed data");
+    }
 
     @Test
-    void testWellFormedData() {
-        assertThrows(InvalidDataException.class, () -> {
-            String[] header;
-            List<String[]> rows;
-            try (BufferedReader reader = new BufferedReader(new FileReader(WEATHER_CSV_NOT_WELL_FORMED))) {
-                header = reader.readLine().split(",");
-                rows = reader.lines().map(line -> line.split(","))
-                        .collect(Collectors.toList());
-            } catch (IOException ex) {
-                System.getLogger(DataTest.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                throw ex;
-            }
-            new Data(header, rows);
-        }, "Expected an InvalidDataException to be thrown due to malformed data");
+    void constructorThrowsIllegalArgumentException_whenHeaderIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> new Data(null, Collections.emptyList()));
+    }
+
+    @Test
+    void constructorThrowsIllegalArgumentException_whenRowsIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> new Data(new String[] { "A" }, null));
+    }
+
+    @Test
+    void constructorAcceptsEmptyRowsList() throws InvalidDataException {
+        Data data = new Data(new String[] { "A", "B" }, Collections.emptyList());
+
+        assertTrue(data.getRows().isEmpty());
+    }
+
+    @Test
+    void getHeaderAndGetRows_returnDataEqualToWhatWasPassedIn() throws InvalidDataException {
+        String[] header = { "A", "B" };
+        List<String[]> rows = List.of(new String[] { "1", "2" }, new String[] { "3", "4" });
+
+        Data data = new Data(header, rows);
+
+        assertArrayEquals(header, data.getHeader());
+        assertEquals(rows.size(), data.getRows().size());
+        for (int i = 0; i < rows.size(); i++) {
+            assertArrayEquals(rows.get(i), data.getRows().get(i));
+        }
+    }
+
+    @Test
+    void mutatingConstructorArguments_afterConstruction_doesNotAffectData() throws InvalidDataException {
+        String[] header = { "A", "B" };
+        String[] row = { "1", "2" };
+        List<String[]> rows = new ArrayList<>(List.<String[]>of(row));
+
+        Data data = new Data(header, rows);
+
+        header[0] = "changed";
+        row[0] = "changed";
+        rows.add(new String[] { "3", "4" });
+
+        assertEquals("A", data.getHeader()[0]);
+        assertEquals(1, data.getRows().size());
+        assertEquals("1", data.getRows().get(0)[0]);
+    }
+
+    @Test
+    void mutatingReturnedGetters_doesNotAffectData() throws InvalidDataException {
+        Data data = new Data(new String[] { "A", "B" }, List.<String[]>of(new String[] { "1", "2" }));
+
+        data.getHeader()[0] = "changed";
+        data.getRows().get(0)[0] = "changed";
+
+        assertEquals("A", data.getHeader()[0]);
+        assertEquals("1", data.getRows().get(0)[0]);
+    }
+
+    @Test
+    void getRows_returnsUnmodifiableList() throws InvalidDataException {
+        Data data = new Data(new String[] { "A" }, List.<String[]>of(new String[] { "1" }));
+        List<String[]> rows = data.getRows();
+
+        assertThrows(UnsupportedOperationException.class, () -> rows.add(new String[] { "2" }));
     }
 
 }
