@@ -29,8 +29,10 @@ class CsvReaderTest {
 
             assertArrayEquals(new String[] { "A", "B" }, data.getHeader());
             assertEquals(2, data.getRows().size());
-            assertArrayEquals(new String[] { "1", "2" }, data.getRows().get(0));
-            assertArrayEquals(new String[] { "3", "4" }, data.getRows().get(1));
+            assertEquals("1", data.getRows().get(0).getValue("A"));
+            assertEquals("2", data.getRows().get(0).getValue("B"));
+            assertEquals("3", data.getRows().get(1).getValue("A"));
+            assertEquals("4", data.getRows().get(1).getValue("B"));
         }
     }
 

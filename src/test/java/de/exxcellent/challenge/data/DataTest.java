@@ -55,7 +55,9 @@ class DataTest {
         assertArrayEquals(header, data.getHeader());
         assertEquals(rows.size(), data.getRows().size());
         for (int i = 0; i < rows.size(); i++) {
-            assertArrayEquals(rows.get(i), data.getRows().get(i));
+            for (int j = 0; j < header.length; j++) {
+                assertEquals(rows.get(i)[j], data.getRows().get(i).getValue(header[j]));
+            }
         }
     }
 
@@ -73,26 +75,41 @@ class DataTest {
 
         assertEquals("A", data.getHeader()[0]);
         assertEquals(1, data.getRows().size());
-        assertEquals("1", data.getRows().get(0)[0]);
+        assertEquals("1", data.getRows().get(0).getValue("A"));
     }
 
     @Test
-    void mutatingReturnedGetters_doesNotAffectData() throws InvalidDataException {
+    void mutatingReturnedHeader_doesNotAffectData() throws InvalidDataException {
         Data data = new Data(new String[] { "A", "B" }, List.<String[]>of(new String[] { "1", "2" }));
 
         data.getHeader()[0] = "changed";
-        data.getRows().get(0)[0] = "changed";
 
         assertEquals("A", data.getHeader()[0]);
-        assertEquals("1", data.getRows().get(0)[0]);
+        assertEquals("1", data.getRows().get(0).getValue("A"));
     }
 
     @Test
     void getRows_returnsUnmodifiableList() throws InvalidDataException {
         Data data = new Data(new String[] { "A" }, List.<String[]>of(new String[] { "1" }));
-        List<String[]> rows = data.getRows();
+        List<Data.Row> rows = data.getRows();
 
-        assertThrows(UnsupportedOperationException.class, () -> rows.add(new String[] { "2" }));
+        assertThrows(UnsupportedOperationException.class, () -> rows.add(null));
+    }
+
+    @Test
+    void constructorThrowsInvalidDataException_whenHeaderHasDuplicateColumnName() {
+        String[] header = { "A", "B", "A" };
+        List<String[]> rows = List.<String[]>of(new String[] { "1", "2", "3" });
+
+        assertThrows(InvalidDataException.class, () -> new Data(header, rows));
+    }
+
+    @Test
+    void rowGetValue_unknownColumnName_throwsInvalidDataException() throws InvalidDataException {
+        Data data = new Data(new String[] { "A" }, List.<String[]>of(new String[] { "1" }));
+        Data.Row row = data.getRows().get(0);
+
+        assertThrows(InvalidDataException.class, () -> row.getValue("unknown"));
     }
 
 }

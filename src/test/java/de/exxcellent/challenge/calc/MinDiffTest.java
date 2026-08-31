@@ -22,7 +22,7 @@ class MinDiffTest {
                 new String[] { "Key", "A", "B" },
                 new String[] { "X", "10", "3" });
 
-        String result = MinDiff.getKeyWithSmallestDiff(data, 0, 1, 2, false);
+        String result = MinDiff.getKeyWithSmallestDiff(data, "Key", "A", "B", false);
 
         assertEquals("X", result);
     }
@@ -35,7 +35,7 @@ class MinDiffTest {
                 new String[] { "Y", "2", "5" },
                 new String[] { "Z", "8", "8" });
 
-        String result = MinDiff.getKeyWithSmallestDiff(data, 0, 1, 2, false);
+        String result = MinDiff.getKeyWithSmallestDiff(data, "Key", "A", "B", false);
 
         assertEquals("Y", result);
     }
@@ -48,7 +48,7 @@ class MinDiffTest {
                 new String[] { "Y", "2", "5" },
                 new String[] { "Z", "8", "8" });
 
-        String result = MinDiff.getKeyWithSmallestDiff(data, 0, 1, 2, true);
+        String result = MinDiff.getKeyWithSmallestDiff(data, "Key", "A", "B", true);
 
         assertEquals("Z", result);
     }
@@ -59,7 +59,7 @@ class MinDiffTest {
                 new String[] { "Key", "A", "B" });
 
         assertThrows(InvalidDataException.class, () -> {
-            MinDiff.getKeyWithSmallestDiff(data, 0, 1, 2, false);
+            MinDiff.getKeyWithSmallestDiff(data, "Key", "A", "B", false);
         });
     }
 
@@ -72,7 +72,7 @@ class MinDiffTest {
                 new String[] { "Z", "8", "8" },
                 new String[] { "W", "1", "4" });
 
-        String result = MinDiff.getKeyWithSmallestDiff(data, 0, 1, 2, false);
+        String result = MinDiff.getKeyWithSmallestDiff(data, "Key", "A", "B", false);
 
         assertEquals("Y", result);
     }
@@ -87,30 +87,19 @@ class MinDiffTest {
                 new String[] { "Z", "1", "20" });
 
 
-        String result = MinDiff.getKeyWithSmallestDiff(data, 0, 1, 2, true);
+        String result = MinDiff.getKeyWithSmallestDiff(data, "Key", "A", "B", true);
 
         assertEquals("X", result);
     }
 
     @Test
-    void getKeyWithSmallestDiff_negativeColumnIndex_throwsIllegalArgumentException() throws InvalidDataException {
-        Data data = data(
-                new String[] { "Key", "A", "B" },
-                new String[] { "X", "10", "3" });
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            MinDiff.getKeyWithSmallestDiff(data, 0, 1, -1, false);
-        });
-    }
-
-    @Test
-    void getKeyWithSmallestDiff_tooLargeColumnIndex_throwsInvalidDataException() throws InvalidDataException {
+    void getKeyWithSmallestDiff_unknownColumnName_throwsInvalidDataException() throws InvalidDataException {
         Data data = data(
                 new String[] { "Key", "A", "B" },
                 new String[] { "X", "10", "3" });
 
         assertThrows(InvalidDataException.class, () -> {
-            MinDiff.getKeyWithSmallestDiff(data, 0, 1, 3, false);
+            MinDiff.getKeyWithSmallestDiff(data, "Key", "A", "C", false);
         });
     }
 
@@ -119,7 +108,7 @@ class MinDiffTest {
         Data data = data(new String[0]);
 
         assertThrows(InvalidDataException.class, () -> {
-            MinDiff.getKeyWithSmallestDiff(data, 0, 1, 2, false);
+            MinDiff.getKeyWithSmallestDiff(data, "Key", "A", "B", false);
         });
     }
 
@@ -131,7 +120,7 @@ class MinDiffTest {
                 new String[] { "Y", "not-a-number", "5" });
 
         assertThrows(InvalidDataException.class, () -> {
-            MinDiff.getKeyWithSmallestDiff(data, 0, 1, 2, false);
+            MinDiff.getKeyWithSmallestDiff(data, "Key", "A", "B", false);
         });
     }
 }

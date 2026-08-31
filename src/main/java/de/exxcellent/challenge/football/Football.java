@@ -5,7 +5,7 @@ import de.exxcellent.challenge.data.Data;
 import de.exxcellent.challenge.exception.InvalidDataException;
 
 /**
- * Provides football-specific analysis over {@link Data} read from a CSV file.
+ * Provides football-specific analysis over {@link Data}.
  */
 public class Football {
 
@@ -19,6 +19,6 @@ public class Football {
     */
 
     public static String getTeamWithSmallestDiff(Data data) throws InvalidDataException {
-        return MinDiff.getKeyWithSmallestDiff(data, 0, 5, 6, true);
+        return MinDiff.getKeyWithSmallestDiff(data, "Team", "Goals", "Goals Allowed", true);
     }
 }

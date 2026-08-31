@@ -1,14 +1,12 @@
 package de.exxcellent.challenge.weather;
 
-import java.io.IOException;
-
 import de.exxcellent.challenge.calc.MinDiff;
 import de.exxcellent.challenge.data.Data;
 import de.exxcellent.challenge.exception.InvalidDataException;
 
 
 /**
- * Provides weather-specific analysis over {@link Data} read from a CSV file.
+ * Provides weather-specific analysis over {@link Data}.
  */
 public class Weather {
     /**
@@ -18,6 +16,6 @@ public class Weather {
      * @throws InvalidDataException if the data contains no row usable for the computation
      */
     public static String getDayWithSmallestTemperatureSpread(Data data) throws InvalidDataException {
-        return MinDiff.getKeyWithSmallestDiff(data, 0, 1, 2, false);
+        return MinDiff.getKeyWithSmallestDiff(data, "Day", "MxT", "MnT", false);
     }
 }
