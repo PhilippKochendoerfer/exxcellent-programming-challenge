@@ -17,6 +17,8 @@ class AppTest {
 
     private static final String WEATHER_CSV = "src/main/resources/de/exxcellent/challenge/weather.csv";
     private static final String FOOTBALL_CSV = "src/main/resources/de/exxcellent/challenge/football.csv";
+    private static final String WEATHER_JSON = "src/main/resources/de/exxcellent/challenge/weather.json";
+    private static final String FOOTBALL_JSON = "src/main/resources/de/exxcellent/challenge/football.json";
 
     private final PrintStream originalOut = System.out;
     private ByteArrayOutputStream capturedOut;
@@ -42,15 +44,29 @@ class AppTest {
     }
 
     @Test
-    void main_weatherArgs_printsWeatherResult() {
-        App.main("--weather", WEATHER_CSV);
+    void main_weatherCsvArgs_printsWeatherResult() {
+        App.main("--weather", "--csv", WEATHER_CSV);
 
         assertEquals("Day with smallest temperature spread : 14" + System.lineSeparator(), capturedOut.toString());
     }
 
     @Test
-    void main_footballArgs_printsFootballResult() {
-        App.main("--football", FOOTBALL_CSV);
+    void main_footballCsvArgs_printsFootballResult() {
+        App.main("--football", "--csv", FOOTBALL_CSV);
+
+        assertEquals("Team with smallest goal spread : Aston_Villa" + System.lineSeparator(), capturedOut.toString());
+    }
+
+    @Test
+    void main_weatherJsonArgs_printsWeatherResult() {
+        App.main("--weather", "--json", WEATHER_JSON);
+
+        assertEquals("Day with smallest temperature spread : 14" + System.lineSeparator(), capturedOut.toString());
+    }
+
+    @Test
+    void main_footballJsonArgs_printsFootballResult() {
+        App.main("--football", "--json", FOOTBALL_JSON);
 
         assertEquals("Team with smallest goal spread : Aston_Villa" + System.lineSeparator(), capturedOut.toString());
     }

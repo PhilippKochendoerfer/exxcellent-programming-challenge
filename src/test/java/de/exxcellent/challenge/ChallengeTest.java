@@ -13,28 +13,49 @@ class ChallengeTest {
 
     private static final String WEATHER_CSV = "src/main/resources/de/exxcellent/challenge/weather.csv";
     private static final String FOOTBALL_CSV = "src/main/resources/de/exxcellent/challenge/football.csv";
+    private static final String WEATHER_JSON = "src/main/resources/de/exxcellent/challenge/weather.json";
+    private static final String FOOTBALL_JSON = "src/main/resources/de/exxcellent/challenge/football.json";
 
     @Test
-    void challenge_weather_returnsFormattedMessage() throws IOException, InvalidDataException {
-        String result = Challenge.challenge("--weather", WEATHER_CSV);
+    void challenge_weatherCsv_returnsFormattedMessage() throws IOException, InvalidDataException {
+        String result = Challenge.challenge("--weather", "--csv", WEATHER_CSV);
 
         assertEquals("Day with smallest temperature spread : 14", result);
     }
 
     @Test
-    void challenge_football_returnsFormattedMessage() throws IOException, InvalidDataException {
-        String result = Challenge.challenge("--football", FOOTBALL_CSV);
+    void challenge_footballCsv_returnsFormattedMessage() throws IOException, InvalidDataException {
+        String result = Challenge.challenge("--football", "--csv", FOOTBALL_CSV);
+
+        assertEquals("Team with smallest goal spread : Aston_Villa", result);
+    }
+
+    @Test
+    void challenge_weatherJson_returnsSameResultAsCsv() throws IOException, InvalidDataException {
+        String result = Challenge.challenge("--weather", "--json", WEATHER_JSON);
+
+        assertEquals("Day with smallest temperature spread : 14", result);
+    }
+
+    @Test
+    void challenge_footballJson_returnsSameResultAsCsv() throws IOException, InvalidDataException {
+        String result = Challenge.challenge("--football", "--json", FOOTBALL_JSON);
 
         assertEquals("Team with smallest goal spread : Aston_Villa", result);
     }
 
     @Test
     void challenge_unknownApp_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> Challenge.challenge("--foo", WEATHER_CSV));
+        assertThrows(IllegalArgumentException.class, () -> Challenge.challenge("--foo", "--csv", WEATHER_CSV));
+    }
+
+    @Test
+    void challenge_unknownFormat_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> Challenge.challenge("--weather", "--xml", WEATHER_CSV));
     }
 
     @Test
     void challenge_missingFile_throwsIOException() {
-        assertThrows(IOException.class, () -> Challenge.challenge("--weather", "does/not/exist.csv"));
+        assertThrows(IOException.class, () -> Challenge.challenge("--weather", "--csv", "does/not/exist.csv"));
     }
 }

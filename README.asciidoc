@@ -141,12 +141,17 @@ Build & test your project::
     `mvn verify`
 
 Then to run the main class _de.exxcellent.challenge.App_::
-    `mvn compile exec:java "-Dexec.args=--weather path/to/weather.csv"` +
-    `mvn compile exec:java "-Dexec.args=--football path/to/football.csv"`
+    `mvn compile exec:java "-Dexec.args=--weather --csv path/to/weather.csv"` +
+    `mvn compile exec:java "-Dexec.args=--football --json path/to/football.json"`
 
 Or without the exec plugin::
     `mvn compile` +
-    `java -cp target/classes de.exxcellent.challenge.App --weather path/to/weather.csv`
+    `java -cp target/classes de.exxcellent.challenge.App --weather --csv path/to/weather.csv`
+
+Supported data formats::
+    Both CSV and JSON input files are supported via the `--csv`/`--json`
+    format flag. A JSON file is expected to contain an array of flat
+    objects, one per row, e.g. `[{"Day":"1","MxT":"88",...}, ...]`.
 
 To remove the compilation output::
     `mvn clean`

@@ -20,18 +20,19 @@ public final class App {
      * This is the main entry method of your program. Called without arguments,
      * it runs both the weather and football analysis on the bundled sample data.
      *
-     * @param args The CLI arguments passed: none, or exactly {@code <--weather|--football> <file>}.
+     * @param args The CLI arguments passed: none, or exactly
+     *             {@code <--weather|--football> <--csv|--json> <file>}.
      */
     public static void main(String... args) {
 
         try {
             if (args.length == 0) {
-                System.out.println(Challenge.challenge("--weather", DEFAULT_WEATHER_FILE));
-                System.out.println(Challenge.challenge("--football", DEFAULT_FOOTBALL_FILE));
-            } else if (args.length == 2) {
-                System.out.println(Challenge.challenge(args[0], args[1]));
+                System.out.println(Challenge.challenge("--weather", "--csv", DEFAULT_WEATHER_FILE));
+                System.out.println(Challenge.challenge("--football", "--csv", DEFAULT_FOOTBALL_FILE));
+            } else if (args.length == 3) {
+                System.out.println(Challenge.challenge(args[0], args[1], args[2]));
             } else {
-                System.err.println("Usage: <--weather|--football> <file>");
+                System.err.println("Usage: <--weather|--football> <--csv|--json> <file>");
                 System.exit(1);
             }
         } catch (IOException e) {
