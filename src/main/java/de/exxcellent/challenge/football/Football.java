@@ -2,7 +2,7 @@ package de.exxcellent.challenge.football;
 
 import de.exxcellent.challenge.calc.MinDiff;
 import de.exxcellent.challenge.data.Data;
-import de.exxcellent.challenge.exception.NoDataFoundException;
+import de.exxcellent.challenge.exception.InvalidDataException;
 
 /**
  * Provides football-specific analysis over {@link Data} read from a CSV file.
@@ -15,10 +15,10 @@ public class Football {
      *
      * @param data The data to analyze.
      * @return The team with the smallest difference.
-     * @throws NoDataFoundException if the data contains no row usable for the computation
+     * @throws InvalidDataException if the data contains no row usable for the computation
     */
 
-    public static String getTeamWithSmallestDiff(Data data) throws NoDataFoundException {
+    public static String getTeamWithSmallestDiff(Data data) throws InvalidDataException {
         return MinDiff.getKeyWithSmallestDiff(data, 0, 5, 6, true);
     }
 }

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.exxcellent.challenge.exception.InvalidDataException;
+
 /**
  * Class to read data from a CSV file and create a Data object.
  *
@@ -25,10 +27,11 @@ public class CsvReader extends DataFileReader {
     /**
      * Reads data from the CSV file and creates a Data object.
      * @return The Data object containing the header and rows from the CSV file.
-     * @throws IOException if the file cannot be read.
+     * @throws IOException          if the file cannot be read.
+     * @throws InvalidDataException if the CSV rows are not well-formed.
      */
     @Override
-    public Data readData() throws IOException {
+    public Data readData() throws IOException, InvalidDataException {
         String[] header = bufferedReader.readLine().split(",");
         List<String[]> rows = bufferedReader.lines().map(line -> line.split(","))
                 .collect(Collectors.toList());

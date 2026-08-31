@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import de.exxcellent.challenge.data.CsvReader;
 import de.exxcellent.challenge.data.Data;
-import de.exxcellent.challenge.exception.NoDataFoundException;
+import de.exxcellent.challenge.exception.InvalidDataException;
 import de.exxcellent.challenge.football.Football;
 import de.exxcellent.challenge.weather.Weather;
 
@@ -19,9 +19,9 @@ public class Challenge {
      * @param file The path to the data file to be processed.
      * @return A message describing the result of the requested computation.
      * @throws IOException if the data file cannot be read
-     * @throws NoDataFoundException if the data contains no row usable for the requested computation
+     * @throws InvalidDataException if the data contains no row usable for the requested computation
      */
-    public static String challenge(String app, String file) throws IOException, NoDataFoundException {
+    public static String challenge(String app, String file) throws IOException, InvalidDataException {
 
         try (CsvReader csvReader = new CsvReader(file)) {
             Data data = csvReader.readData();

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import de.exxcellent.challenge.exception.InvalidDataException;
+
 /**
  * Abstract class to read data from an input stream and create table-like data
  * structure.
@@ -27,9 +29,10 @@ public abstract class DataReader implements AutoCloseable {
      * Reads data from the input stream and creates a table-like data structure.
      * 
      * @return The data read from the input stream.
-     * @throws IOException if the input stream cannot be read.
+     * @throws IOException          if the input stream cannot be read.
+     * @throws InvalidDataException if the read data is not well-formed.
      */
-    public abstract Data readData() throws IOException;
+    public abstract Data readData() throws IOException, InvalidDataException;
 
     @Override
     public void close() throws IOException {

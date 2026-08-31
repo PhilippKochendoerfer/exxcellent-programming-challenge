@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.exxcellent.challenge.exception.InvalidDataException;
+
 /**
  * Immutable class to represent table-like data structure with header and rows.
  * @author Philipp Kochendörfer <philipp.kochendoerfer@outlook.com>
@@ -21,15 +23,15 @@ public final class Data {
      *
      * @param header The column names.
      * @param rows   The data rows; each row's length must match {@code header}'s length.
-     * @throws IllegalArgumentException if header or rows is null, or if any row's
-     *                                  length differs from the header's length.
+     * @throws IllegalArgumentException if header or rows is null.
+     * @throws InvalidDataException     if any row's length differs from the header's length.
      */
-    public Data(String[] header, List<String[]> rows) {
+    public Data(String[] header, List<String[]> rows) throws InvalidDataException {
         if (header == null || rows == null) {
             throw new IllegalArgumentException("Header and rows cannot be null");
         }
         if (rows.stream().anyMatch(row -> row.length != header.length)) {
-            throw new IllegalArgumentException("All rows must have the same number of columns as the header");
+            throw new InvalidDataException("All rows must have the same number of columns as the header");
         }
 
         this.header = header.clone();

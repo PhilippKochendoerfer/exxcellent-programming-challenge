@@ -2,9 +2,7 @@ package de.exxcellent.challenge;
 
 import java.io.IOException;
 
-import de.exxcellent.challenge.exception.NoDataFoundException;
-import de.exxcellent.challenge.football.Football;
-import de.exxcellent.challenge.weather.Weather;
+import de.exxcellent.challenge.exception.InvalidDataException;
 
 /**
  * The entry class for your solution. This class is only aimed as starting point
@@ -39,7 +37,7 @@ public final class App {
         } catch (IOException e) {
             System.err.println("I/O error while reading file: " + e.getMessage());
             System.exit(1);
-        } catch (NoDataFoundException e) {
+        } catch (InvalidDataException e) {
             System.err.println("Could not calculate result. " + e.getMessage());
             System.exit(1);
         }

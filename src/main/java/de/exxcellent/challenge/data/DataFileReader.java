@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import de.exxcellent.challenge.exception.InvalidDataException;
+
 /**
  * Class to read data from a file and create table-like data structure.
  *
@@ -22,6 +24,6 @@ public abstract class DataFileReader extends DataReader {
     }
 
     @Override
-    public abstract Data readData() throws IOException;
+    public abstract Data readData() throws IOException, InvalidDataException;
 
 }

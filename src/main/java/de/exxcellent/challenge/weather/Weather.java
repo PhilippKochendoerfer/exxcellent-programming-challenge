@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import de.exxcellent.challenge.calc.MinDiff;
 import de.exxcellent.challenge.data.Data;
-import de.exxcellent.challenge.exception.NoDataFoundException;
+import de.exxcellent.challenge.exception.InvalidDataException;
 
 
 /**
@@ -15,9 +15,9 @@ public class Weather {
      * Returns the day with the smallest difference between maximum and minimum temperature.
      * @param data The data to analyze.
      * @return The day with the smallest temperature spread.
-     * @throws NoDataFoundException if the data contains no row usable for the computation
+     * @throws InvalidDataException if the data contains no row usable for the computation
      */
-    public static String getDayWithSmallestTemperatureSpread(Data data) throws NoDataFoundException {
+    public static String getDayWithSmallestTemperatureSpread(Data data) throws InvalidDataException {
         return MinDiff.getKeyWithSmallestDiff(data, 0, 1, 2, false);
     }
 }
