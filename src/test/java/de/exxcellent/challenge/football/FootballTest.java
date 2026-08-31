@@ -2,6 +2,7 @@ package de.exxcellent.challenge.football;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -39,7 +40,8 @@ class FootballTest {
 
     @Test
     void getTeamWithSmallestDiff_productionCsv_returnsAstonVilla() throws IOException, InvalidDataException {
-        try (DataReader dataReader = new CsvReader("src/main/resources/de/exxcellent/challenge/football.csv")) {
+        try (DataReader dataReader = new CsvReader(
+                new FileInputStream("src/main/resources/de/exxcellent/challenge/football.csv"))) {
             assertEquals("Aston_Villa", Football.getTeamWithSmallestDiff(dataReader.readData()));
         }
     }

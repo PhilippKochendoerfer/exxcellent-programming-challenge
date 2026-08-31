@@ -1,13 +1,13 @@
 package de.exxcellent.challenge.data.json;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import de.exxcellent.challenge.data.Data;
-import de.exxcellent.challenge.data.DataFileReader;
+import de.exxcellent.challenge.data.DataReader;
 import de.exxcellent.challenge.exception.InvalidDataException;
 
 import org.json.JSONArray;
@@ -15,31 +15,30 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Class to read data from a JSON file and create a Data object. Expects the
- * file to contain a JSON array of flat objects, e.g.
+ * Class to read data from a JSON input stream and create a Data object.
+ * Expects the stream to contain a JSON array of flat objects, e.g.
  * {@code [{"Day":"1","MxT":"88"}, {"Day":"2","MxT":"84"}]}. All objects are
  * expected to have the same set of keys as the first one; the header column
  * order is taken from the first object.
  *
  * @author Philipp Kochendörfer <philipp.kochendoerfer@outlook.com>
  */
-public class JsonReader extends DataFileReader {
+public class JsonReader extends DataReader {
 
     /**
-     * Opens the JSON file at the given path for reading.
+     * Creates a new JsonReader reading from the given input stream.
      *
-     * @param filePath path to the JSON file to read.
-     * @throws FileNotFoundException if no file exists at the given path.
+     * @param inputStream The input stream to read JSON data from.
      */
-    public JsonReader(String filePath) throws FileNotFoundException {
-        super(filePath);
+    public JsonReader(InputStream inputStream) {
+        super(inputStream);
     }
 
     /**
      * Reads data from the JSON file and creates a Data object.
      *
-     * @return The Data object containing the header and rows from the JSON file.
-     * @throws IOException          if the file cannot be read.
+     * @return The Data object containing the header and rows from the JSON data.
+     * @throws IOException          if the input stream cannot be read.
      * @throws InvalidDataException if the file does not contain a well-formed
      *                              JSON array of objects, the array is empty, or
      *                              an object is missing a key present in the header.

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class JsonReaderTest {
 
     @Test
     void readData_validJson_parsesHeaderAndRows() throws IOException, InvalidDataException {
-        try (JsonReader jsonReader = new JsonReader(TINY_VALID_JSON)) {
+        try (JsonReader jsonReader = new JsonReader(new FileInputStream(TINY_VALID_JSON))) {
             Data data = jsonReader.readData();
 
             assertArrayEquals(new String[] { "A", "B" }, data.getHeader());
@@ -38,19 +38,14 @@ class JsonReaderTest {
 
     @Test
     void readData_emptyJson_throwsInvalidDataException() throws IOException {
-        try (JsonReader jsonReader = new JsonReader(EMPTY_JSON)) {
+        try (JsonReader jsonReader = new JsonReader(new FileInputStream(EMPTY_JSON))) {
             assertThrows(InvalidDataException.class, jsonReader::readData);
         }
     }
 
     @Test
-    void constructor_missingFile_throwsFileNotFoundException() {
-        assertThrows(FileNotFoundException.class, () -> new JsonReader("does/not/exist.json"));
-    }
-
-    @Test
     void readData_malformedJson_throwsInvalidDataException() throws IOException {
-        try (JsonReader jsonReader = new JsonReader(MALFORMED_JSON)) {
+        try (JsonReader jsonReader = new JsonReader(new FileInputStream(MALFORMED_JSON))) {
             assertThrows(InvalidDataException.class, jsonReader::readData);
         }
     }

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class CsvReaderTest {
 
     @Test
     void readData_validCsv_parsesHeaderAndRows() throws IOException, InvalidDataException {
-        try (CsvReader csvReader = new CsvReader(TINY_VALID_CSV)) {
+        try (CsvReader csvReader = new CsvReader(new FileInputStream(TINY_VALID_CSV))) {
             Data data = csvReader.readData();
 
             assertArrayEquals(new String[] { "A", "B" }, data.getHeader());
@@ -38,7 +38,7 @@ class CsvReaderTest {
 
     @Test
     void readData_headerOnlyCsv_producesEmptyRows() throws IOException, InvalidDataException {
-        try (CsvReader csvReader = new CsvReader(HEADER_ONLY_CSV)) {
+        try (CsvReader csvReader = new CsvReader(new FileInputStream(HEADER_ONLY_CSV))) {
             Data data = csvReader.readData();
 
             assertArrayEquals(new String[] { "A", "B" }, data.getHeader());
@@ -47,13 +47,8 @@ class CsvReaderTest {
     }
 
     @Test
-    void constructor_missingFile_throwsFileNotFoundException() {
-        assertThrows(FileNotFoundException.class, () -> new CsvReader("does/not/exist.csv"));
-    }
-
-    @Test
     void readData_malformedCsv_throwsInvalidDataException() throws IOException {
-        try (CsvReader csvReader = new CsvReader(MALFORMED_CSV)) {
+        try (CsvReader csvReader = new CsvReader(new FileInputStream(MALFORMED_CSV))) {
             assertThrows(InvalidDataException.class, csvReader::readData);
         }
     }

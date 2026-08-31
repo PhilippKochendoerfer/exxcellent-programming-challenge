@@ -2,6 +2,7 @@ package de.exxcellent.challenge.weather;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -40,7 +41,8 @@ class WeatherTest {
 
     @Test
     void getDayWithSmallestTemperatureSpread_productionCsv_returnsDay14() throws IOException, InvalidDataException {
-        try (DataReader dataReader = new CsvReader("src/main/resources/de/exxcellent/challenge/weather.csv")) {
+        try (DataReader dataReader = new CsvReader(
+                new FileInputStream("src/main/resources/de/exxcellent/challenge/weather.csv"))) {
             assertEquals("14", Weather.getDayWithSmallestTemperatureSpread(dataReader.readData()));
         }
     }
