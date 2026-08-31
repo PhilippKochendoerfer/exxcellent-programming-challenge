@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
+import de.exxcellent.challenge.exception.InvalidDataException;
+
 
 /**
  * Test class for the Data class.
@@ -20,7 +22,7 @@ class DataTest {
 
     @Test
     void testWellFormedData() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidDataException.class, () -> {
             String[] header;
             List<String[]> rows;
             try (BufferedReader reader = new BufferedReader(new FileReader(WEATHER_CSV_NOT_WELL_FORMED))) {
@@ -32,7 +34,7 @@ class DataTest {
                 throw ex;
             }
             new Data(header, rows);
-        }, "Expected an IllegalArgumentException to be thrown due to malformed data");
+        }, "Expected an InvalidDataException to be thrown due to malformed data");
     }
 
 }
